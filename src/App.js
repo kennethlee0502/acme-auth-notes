@@ -1,48 +1,46 @@
-import React from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
-import { attemptLogin, logout } from './store';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import Home from './Home';
-import Notes from './Notes';
-import SignIn from './SignIn';
+import React from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+import { attemptLogin, logout } from "./store";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Home from "./Home";
+import Notes from "./Notes";
+import SignIn from "./SignIn";
 
-
-class App extends React.Component{
-  componentDidMount(){
+class App extends React.Component {
+  componentDidMount() {
     this.props.attemptLogin();
   }
-  render(){
+  render() {
     const { auth } = this.props;
-    console.log(auth);
+    // console.log(auth);
 
-    if(!auth.id){
+    if (!auth.id) {
       return (
         <Switch>
-          <Route path='/signin' component={ SignIn } />
-          <Redirect to='/signin' />
+          <Route path="/signin" component={SignIn} />
+          <Redirect to="/signin" />
         </Switch>
       );
-    }
-    else {
+    } else {
       return (
         <Switch>
-          <Route path='/home' component={ Home } />
-          <Route path='/notes' component={ Notes } />
-          <Redirect to='/home' />
+          <Route path="/home" component={Home} />
+          <Route path="/notes" component={Notes} />
+          <Redirect to="/home" />
         </Switch>
       );
     }
   }
 }
 
-const mapState = state => state;
-const mapDispatch = (dispatch)=> {
+const mapState = (state) => state;
+const mapDispatch = (dispatch) => {
   return {
-    attemptLogin: ()=> {
+    attemptLogin: () => {
       return dispatch(attemptLogin());
-    }
-  }
-}
+    },
+  };
+};
 
 export default connect(mapState, mapDispatch)(App);
